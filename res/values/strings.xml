@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Random Timer</string>
+  <string name="stopped_text">Stopped</string>
+  <string name="running_text">Running</string>
+  <string name="time_up_text">Time Up!</string>
+  <string name="start_text">Start</string>
+  <string name="stop_text">Stop</string>
+  <string name="pref_category_sound">Sound</string>
+  <string name="pref_category_vibrate">Vibration</string>
+  <string name="pref_category_time">Time</string>
+  <string name="pref_category_appearance">Appearance</string>
+  <string name="pref_title_sound">Play Notification</string>
+  <string name="pref_sound_summary">Play a notification sound when time runs out</string>
+  <string name="pref_title_vibrate">Vibration</string>
+  <string name="pref_vibrate_summary">Vibrate when time runs out</string>
+  <string name="pref_title_ringtone">Notification Sound</string>
+  <string name="pref_title_min_time">Minimum Time</string>
+  <string name="pref_title_max_time">Maximum Time</string>
+  <string name="pref_title_repeat">Continuous Mode</string>
+  <string name="pref_title_licenses">Open Source Licenses</string>
+  <string name="pref_title_about">About Random Timer</string>
+  <string name="pref_repeat_summary">Automatically randomize and restart after time expires, until \"Stop\" is pressed</string>
+  <string name="pref_media_output_title">Use \"media\" audio channel</string>
+  <string name="pref_media_output_summary">Playing the notification sound over the \"media\" audio channel will cause it to use your media volume settings, and allow it to play through headphones or external speakers. When this settings is disabled, the \"notification\" audio channel will be used instead.</string>
+  <string name="pref_title_theme">Theme</string>
+  <string name="pref_category_more">More Options</string>
+  <string name="image_desc">Status Ring</string>
+</resources>

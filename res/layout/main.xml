@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal">
+	    <ImageView
+	        android:id="@+id/imgRunning"
+	        android:layout_width="300dp"
+	        android:layout_height="300dp"
+	        android:paddingTop="50dp"
+	        android:paddingBottom="50dp"
+	        android:layout_gravity="center"
+	        android:src="@drawable/yellow_ring"
+	        android:contentDescription="@string/image_desc" />
+	    <TextView
+	        android:id="@+id/txtRunning"
+	        android:layout_width="300dp"
+	        android:layout_height="300dp"
+	        android:gravity="center"
+	        android:textSize="28sp"
+	        android:text="@string/stopped_text" />
+    </FrameLayout>
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/btnReset"
+        android:layout_width="fill_parent"
+        android:layout_height="88dp"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="invisible"
+        bootstrap:bb_type="primary"
+        bootstrap:bb_text_gravity="center"
+        bootstrap:bb_roundedCorners="true" />
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/btnStart"
+        android:layout_width="fill_parent"
+        android:layout_height="88dp"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/start_text"
+        android:onClick="btnStartClick"
+        bootstrap:bb_type="success"
+        bootstrap:bb_text_gravity="center"
+        bootstrap:bb_roundedCorners="true" />
+</LinearLayout>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+  <PreferenceCategory
+              android:title="@string/pref_category_sound">
+
+    <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_sound"
+            android:summary="@string/pref_sound_summary"
+            android:title="@string/pref_title_sound" />
+
+    <RingtonePreference
+                android:defaultValue="content://settings/system/notification_sound"
+                android:ringtoneType="notification"
+                android:showDefault="true"
+                android:showSilent="false"
+                android:key="pref_key_ringtone"
+                android:title="@string/pref_title_ringtone"
+                android:dependency="pref_key_sound"/>
+    
+    <CheckBoxPreference 
+        android:defaultValue="false"
+        android:key="pref_key_media_output"
+        android:summary="@string/pref_media_output_summary"
+        android:title="@string/pref_media_output_title"
+        android:dependency ="pref_key_sound"/>
+
+  </PreferenceCategory>
+
+  <PreferenceCategory
+                  android:title="@string/pref_category_vibrate">
+
+    <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_vibrate"
+            android:summary="@string/pref_vibrate_summary"
+            android:title="@string/pref_title_vibrate" />
+
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/pref_category_time">
+
+    <EditTextPreference
+            android:defaultValue="30"
+            android:key="pref_key_min_time"
+            android:title="@string/pref_title_min_time"
+            android:inputType="number" />
+
+    <EditTextPreference
+            android:defaultValue="60"
+            android:key="pref_key_max_time"
+            android:title="@string/pref_title_max_time"
+            android:inputType="number" />
+    
+    <CheckBoxPreference 
+        	android:defaultValue="false"
+        	android:key="pref_key_repeat"
+            android:summary="@string/pref_repeat_summary"
+        	android:title="@string/pref_title_repeat" />
+    
+  </PreferenceCategory>
+  
+  <PreferenceCategory android:title="@string/pref_category_appearance">
+      
+      <ListPreference 
+          android:defaultValue="0"
+          android:key="pref_key_theme"
+          android:title="@string/pref_title_theme"
+          android:entries="@array/theme_names"
+          android:entryValues="@array/theme_values" />
+      
+  </PreferenceCategory>
+  
+  <PreferenceCategory android:title="@string/pref_category_more">
+      
+      <Preference
+          android:key="pref_key_licenses"
+          android:title="@string/pref_title_licenses"
+          android:summary="" />
+      
+      <Preference
+          android:key="pref_key_about"
+          android:title="@string/pref_title_about"
+          android:summary="" />
+      
+  </PreferenceCategory>
+
+</PreferenceScreen>
