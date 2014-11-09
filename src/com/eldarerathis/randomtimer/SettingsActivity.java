@@ -28,7 +28,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
+import android.preference.DialogPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -60,8 +60,8 @@ public class SettingsActivity extends PreferenceActivity
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 		
 		RingtonePreference ringPref = (RingtonePreference)findPreference("pref_key_ringtone");
-		EditTextPreference minPref = (EditTextPreference)findPreference("pref_key_min_time");
-		EditTextPreference maxPref = (EditTextPreference)findPreference("pref_key_max_time");
+		DialogPreference minPref = (DialogPreference)findPreference("pref_key_min_time");
+		DialogPreference maxPref = (DialogPreference)findPreference("pref_key_max_time");
 		Preference licensePref = findPreference("pref_key_licenses");
 		
 		ringPref.setOnPreferenceChangeListener(this);
@@ -89,13 +89,15 @@ public class SettingsActivity extends PreferenceActivity
 	
 	private void updateSummary(String key)
 	{
-		if (findPreference(key) instanceof EditTextPreference)
+		if (findPreference(key) instanceof DialogPreference && !key.equals("pref_key_theme"))
 		{
-			EditTextPreference ep = (EditTextPreference)findPreference(key);
-			String summary = ep.getText() + " seconds";
-			ep.setSummary(summary);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+			DialogPreference p = (DialogPreference)findPreference(key);
+			String defValue = key.equals("pref_key_max_time") ? "60" : "30";
+			String summary = secondsToHMS(Integer.parseInt(prefs.getString(p.getKey(), defValue)));
+			p.setSummary(summary);
 		}
-		else if (findPreference(key) instanceof ListPreference)
+		else if (key.equals("pref_key_theme"))
 		{
 			ListPreference lp = (ListPreference)findPreference(key);
 			int value = Integer.parseInt(lp.getValue());
@@ -207,12 +209,12 @@ public class SettingsActivity extends PreferenceActivity
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) 
 	{
-		if (preference instanceof EditTextPreference)
+		if (preference instanceof DialogPreference)
 		{
 			if (preference.getKey().equals("pref_key_min_time"))
 			{
-				EditTextPreference maxPref = (EditTextPreference)findPreference("pref_key_max_time");
-				int maxValue = Integer.parseInt(maxPref.getText());
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+				int maxValue = Integer.parseInt(prefs.getString("pref_key_max_time", "60"));
 				
 				if (maxValue < Integer.parseInt(newValue.toString()))
 				{
@@ -227,8 +229,8 @@ public class SettingsActivity extends PreferenceActivity
 			}
 			else if (preference.getKey().equals("pref_key_max_time"))
 			{
-				EditTextPreference minPref = (EditTextPreference)findPreference("pref_key_min_time");
-				int minValue = Integer.parseInt(minPref.getText());
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+				int minValue = Integer.parseInt(prefs.getString("pref_key_min_time", "30"));
 				
 				if (minValue > Integer.parseInt(newValue.toString()))
 				{
@@ -241,6 +243,8 @@ public class SettingsActivity extends PreferenceActivity
 					return false;
 				}
 			}
+			
+			updateSummary(preference.getKey());
 		}
 		else if (preference instanceof RingtonePreference)
 		{
@@ -262,6 +266,35 @@ public class SettingsActivity extends PreferenceActivity
 			startActivity(getIntent());
 			finish();
 		}
+	}
+	
+	private String secondsToHMS(int totalSeconds)
+	{
+		String output = "";
+		int hours = totalSeconds / 3600;
+		int minutes = (totalSeconds % 3600) / 60;
+		int seconds = totalSeconds %60;
+		
+		if (hours > 0)
+			output += String.valueOf(hours) + (hours > 1 ? " hours" : " hour");
+		
+		if (minutes > 0)
+		{
+			if (output.length() > 0)
+				output += ", ";
+			
+			output += String.valueOf(minutes) + (minutes > 1 ? " minutes" : " minute");
+		}
+		
+		if (seconds > 0 || output.length() == 0)
+		{
+			if (output.length() > 0)
+				output += ", ";
+			
+			output += String.valueOf(seconds) + (seconds > 1 || seconds == 0 ? " seconds" : " second");
+		}
+		
+		return output;
 	}
 	
 	private void showInvalidAlert(String title, String message)

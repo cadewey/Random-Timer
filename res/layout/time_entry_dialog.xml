@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/time_entry_dialog_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="6dp"
+        android:orientation="horizontal" >
+        
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="128dp"
+            android:paddingRight="8dp"
+            android:gravity="right"
+            android:text="@string/hours" />
+        
+        <EditText 
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/time_dialog_hours"
+            android:inputType="number"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="6dp"
+        android:orientation="horizontal" >
+        
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="128dp"
+            android:paddingRight="8dp"
+            android:gravity="right"
+            android:text="@string/minutes" />
+        
+        <EditText 
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/time_dialog_minutes"
+            android:inputType="number"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="6dp"
+        android:orientation="horizontal" >
+        
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="128dp"
+            android:paddingRight="8dp"
+            android:gravity="right"
+            android:text="@string/seconds" />
+        
+        <EditText 
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/time_dialog_seconds"
+            android:inputType="number"/>
+        
+    </LinearLayout>
+    
+</LinearLayout>

@@ -41,17 +41,25 @@
 
   <PreferenceCategory android:title="@string/pref_category_time">
 
-    <EditTextPreference
+    <com.eldarerathis.randomtimer.TimeEntryDialog
             android:defaultValue="30"
             android:key="pref_key_min_time"
             android:title="@string/pref_title_min_time"
-            android:inputType="number" />
+            android:dialogLayout="@layout/time_entry_dialog"
+            android:dialogTitle="@string/minimum_time_entry_dialog_title"
+            android:dialogMessage="@string/minimum_time_entry_dialog_message"
+            android:positiveButtonText="@string/save"
+            android:negativeButtonText="@string/cancel" />
 
-    <EditTextPreference
+    <com.eldarerathis.randomtimer.TimeEntryDialog
             android:defaultValue="60"
             android:key="pref_key_max_time"
             android:title="@string/pref_title_max_time"
-            android:inputType="number" />
+            android:dialogLayout="@layout/time_entry_dialog"
+            android:dialogTitle="@string/maximum_time_entry_dialog_title"
+            android:dialogMessage="@string/maximum_time_entry_dialog_message"
+            android:positiveButtonText="@string/save"
+            android:negativeButtonText="@string/cancel" />
     
     <CheckBoxPreference 
         	android:defaultValue="false"
