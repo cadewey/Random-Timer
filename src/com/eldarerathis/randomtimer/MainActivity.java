@@ -24,6 +24,7 @@ import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -33,6 +34,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,6 +76,37 @@ public class MainActivity extends ActionBarActivity
 		_timeUpText = getResources().getString(R.string.time_up_text);
 		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+	}
+	
+	/* HACK: Some LGE devices ship with a broken version of the support library.
+	 * In these cases, pressing the menu button causes an NPE. The next two
+	 * overrides attempt to workaround this issue.
+	 * 
+	 * AOSP buck report: https://code.google.com/p/android/issues/detail?id=78154
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) 
+	{
+	     if ((keyCode == KeyEvent.KEYCODE_MENU) && (Build.VERSION.SDK_INT <= 16) &&
+		     (Build.MANUFACTURER.compareTo("LGE") == 0)) 
+	     {
+		   return true;
+	     }
+	     
+	     return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) 
+	{
+	    if ((keyCode == KeyEvent.KEYCODE_MENU) && (Build.VERSION.SDK_INT <= 16) &&
+		    (Build.MANUFACTURER.compareTo("LGE") == 0))
+	    {
+		   openOptionsMenu();
+		   return true;
+	    }
+	    
+	    return super.onKeyUp(keyCode, event);
 	}
 
 	@Override
