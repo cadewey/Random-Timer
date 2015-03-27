@@ -26,7 +26,7 @@ public class LaunchActivity extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
-		
+
 		startActivityForResult(new Intent(this, MainActivity.class), 0);
 	}
 }

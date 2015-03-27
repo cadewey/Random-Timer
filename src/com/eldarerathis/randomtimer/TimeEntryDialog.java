@@ -33,15 +33,15 @@ public class TimeEntryDialog extends DialogPreference
 	private String _dialogMessage = null;
 	private String _prefKey = null;
 	private String _prefDefault = null;
-	
+
 	public TimeEntryDialog(Context context, AttributeSet attrs) 
 	{
 		super(context, attrs);
-		
+
 		_ctxt = context;
 		setPersistent(false);
 		setDialogLayoutResource(R.layout.time_entry_dialog);
-		
+
 		for (int i = 0; i < attrs.getAttributeCount(); ++i)
 		{
 			if (attrs.getAttributeName(i).equals("dialogMessage"))
@@ -58,13 +58,13 @@ public class TimeEntryDialog extends DialogPreference
 	protected void onBindDialogView(View view)
 	{
 		super.onBindDialogView(view);
-		
+
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(_ctxt);
 		TextView msg = (TextView)view.findViewById(R.id.time_entry_dialog_message);
 		TextView txtHours = (TextView)view.findViewById(R.id.time_dialog_hours);
 		TextView txtMinutes = (TextView)view.findViewById(R.id.time_dialog_minutes);
 		TextView txtSeconds = (TextView)view.findViewById(R.id.time_dialog_seconds);
-		
+
 		int currSeconds = Integer.parseInt(prefs.getString(_prefKey, _prefDefault));
 		int hours = currSeconds / 3600;
 		int minutes = (currSeconds % 3600) / 60;
@@ -75,13 +75,13 @@ public class TimeEntryDialog extends DialogPreference
 		txtMinutes.setText(String.valueOf(minutes));
 		txtSeconds.setText(String.valueOf(seconds));
 	}
-	
+
 	@Override
 	protected void onDialogClosed(boolean positiveResult)
 	{
 		super.onDialogClosed(positiveResult);
 	}
-	
+
 	@Override
 	public void onClick(DialogInterface dialog, int which)
 	{
@@ -92,16 +92,16 @@ public class TimeEntryDialog extends DialogPreference
 				TextView txtHours = (TextView)((AlertDialog)dialog).findViewById(R.id.time_dialog_hours);
 				TextView txtMinutes = (TextView)((AlertDialog)dialog).findViewById(R.id.time_dialog_minutes);
 				TextView txtSeconds = (TextView)((AlertDialog)dialog).findViewById(R.id.time_dialog_seconds);
-				
+
 				String hStr = txtHours.getText().toString();
 				String mStr = txtMinutes.getText().toString();
 				String sStr = txtSeconds.getText().toString();
-				
+
 				int h = isNullOrEmpty(hStr) ? 0 : Integer.parseInt(hStr) * 3600;
 				int m = isNullOrEmpty(mStr) ? 0 : Integer.parseInt(mStr) * 60;
 				int s = isNullOrEmpty(sStr) ? 0 : Integer.parseInt(sStr);
 				int totalSeconds = h + m + s;
-				
+
 				if (callChangeListener(totalSeconds))
 				{
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(_ctxt);
@@ -127,7 +127,7 @@ public class TimeEntryDialog extends DialogPreference
 			}
 		}
 	}
-	
+
 	private boolean isNullOrEmpty(String s)
 	{
 		return s == null || s.length() == 0;

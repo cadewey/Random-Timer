@@ -41,35 +41,35 @@ import android.webkit.WebView;
 
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity 
-	implements OnPreferenceChangeListener, OnSharedPreferenceChangeListener, OnPreferenceClickListener
+implements OnPreferenceChangeListener, OnSharedPreferenceChangeListener, OnPreferenceClickListener
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		int theme = (prefs.getString("pref_key_theme", "0").equals("0"))
 				? R.style.LightSettingsTheme
-				: R.style.DarkSettingsTheme;
-		
+						: R.style.DarkSettingsTheme;
+
 		setTheme(theme);
-		
+
 		super.onCreate(savedInstanceState);
-		
+
 		addPreferencesFromResource(R.xml.settings);
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
-		
+
 		RingtonePreference ringPref = (RingtonePreference)findPreference("pref_key_ringtone");
 		DialogPreference minPref = (DialogPreference)findPreference("pref_key_min_time");
 		DialogPreference maxPref = (DialogPreference)findPreference("pref_key_max_time");
 		Preference licensePref = findPreference("pref_key_licenses");
-		
+
 		ringPref.setOnPreferenceChangeListener(this);
 		minPref.setOnPreferenceChangeListener(this);
 		maxPref.setOnPreferenceChangeListener(this);
 		updateRingtoneSummary(ringPref, prefs.getString(ringPref.getKey(), null));
 		updateTextSummaries();
-		
+
 		licensePref.setOnPreferenceClickListener(this);
 	}
 
@@ -79,14 +79,14 @@ public class SettingsActivity extends PreferenceActivity
 		super.onResume();
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 	}
-	
+
 	@Override
 	protected void onPause()
 	{
 		super.onPause();
 		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 	}
-	
+
 	private void updateSummary(String key)
 	{
 		if (findPreference(key) instanceof DialogPreference && !key.equals("pref_key_theme"))
@@ -119,89 +119,89 @@ public class SettingsActivity extends PreferenceActivity
 			}
 		}
 	}
-	
-	 @Override
-	 public boolean onPreferenceClick(Preference preference) 
-	 {
-		 if (preference.getKey().equals("pref_key_licenses"))
-		 {
-			 WebView wv = new WebView(this);
-			 wv.loadUrl("file:///android_asset/licenses.html");
-			 
-			 new AlertDialog.Builder(this)
-			 	.setTitle("Open Source Licenses")
-			 	.setView(wv)
-			 	.setNegativeButton("Close", new DialogInterface.OnClickListener() 
-			 	{
-				    @Override
-				    public void onClick(DialogInterface dialog, int id) 
-				    {
-				        dialog.dismiss();
-				    }
-				})
-				.show();
-			 
-			 return false;
-		 }
-		 
-		 return true;
-	 }
-	
+
+	@Override
+	public boolean onPreferenceClick(Preference preference) 
+	{
+		if (preference.getKey().equals("pref_key_licenses"))
+		{
+			WebView wv = new WebView(this);
+			wv.loadUrl("file:///android_asset/licenses.html");
+
+			new AlertDialog.Builder(this)
+			.setTitle("Open Source Licenses")
+			.setView(wv)
+			.setNegativeButton("Close", new DialogInterface.OnClickListener() 
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int id) 
+				{
+					dialog.dismiss();
+				}
+			})
+			.show();
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private void updateTextSummaries()
 	{
 		updateSummary("pref_key_min_time");
-        updateSummary("pref_key_max_time");
-        updateSummary("pref_key_theme");
-        updateSummary("pref_key_about");
+		updateSummary("pref_key_max_time");
+		updateSummary("pref_key_theme");
+		updateSummary("pref_key_about");
 	}
-	
+
 	private void updateRingtoneSummary(RingtonePreference pref, String newValue)
 	{
 		String ringtoneName = "None";
-    	Uri uri = Uri.parse(newValue);
-    	
-    	if (uri.getScheme().equals("file"))
-    	{
-    		ringtoneName = uri.getLastPathSegment();
-    	}
-    	else if (uri.getScheme().equals("content"))
-    	{
-    		Cursor c = null;
-    		
-    		try
-    		{
-	    		String[] projection = { MediaStore.Audio.Media.TITLE  };
-	    		c = this.getContentResolver().query(uri, projection, null, null, null);
-	    		
-	    		if (c != null && c.getCount() > 0)
-	    		{
-	    			int columnIndex = c.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE);
-	    			c.moveToFirst();
-	    			ringtoneName = c.getString(columnIndex);
-	    		}
-    		}
-    		catch (SQLiteException ex)
-    		{
-    			Ringtone ringtone = RingtoneManager.getRingtone(this, Uri.parse(newValue));
-    			             
-    			 if (ringtone != null)
-    				 ringtoneName = ringtone.getTitle(this);
-    		}
-    		finally
-    		{
-    			if (c != null)
-    				c.close();
-    		}
-    	}
-    	
-    	pref.setSummary(ringtoneName);
+		Uri uri = Uri.parse(newValue);
+
+		if (uri.getScheme().equals("file"))
+		{
+			ringtoneName = uri.getLastPathSegment();
+		}
+		else if (uri.getScheme().equals("content"))
+		{
+			Cursor c = null;
+
+			try
+			{
+				String[] projection = { MediaStore.Audio.Media.TITLE  };
+				c = this.getContentResolver().query(uri, projection, null, null, null);
+
+				if (c != null && c.getCount() > 0)
+				{
+					int columnIndex = c.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE);
+					c.moveToFirst();
+					ringtoneName = c.getString(columnIndex);
+				}
+			}
+			catch (SQLiteException ex)
+			{
+				Ringtone ringtone = RingtoneManager.getRingtone(this, Uri.parse(newValue));
+
+				if (ringtone != null)
+					ringtoneName = ringtone.getTitle(this);
+			}
+			finally
+			{
+				if (c != null)
+					c.close();
+			}
+		}
+
+		pref.setSummary(ringtoneName);
 	}
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) 
 	{
 		updateSummary(key);
-		
+
 		if (key.equals("pref_key_theme"))
 			recreateCompat();
 	}
@@ -215,7 +215,7 @@ public class SettingsActivity extends PreferenceActivity
 			{
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 				int maxValue = Integer.parseInt(prefs.getString("pref_key_max_time", "60"));
-				
+
 				if (maxValue < Integer.parseInt(newValue.toString()))
 				{
 					showInvalidAlert("Invalid Minimum", "Minimum time cannot be greater than maximum time.");
@@ -231,7 +231,7 @@ public class SettingsActivity extends PreferenceActivity
 			{
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 				int minValue = Integer.parseInt(prefs.getString("pref_key_min_time", "30"));
-				
+
 				if (minValue > Integer.parseInt(newValue.toString()))
 				{
 					showInvalidAlert("Invalid Maximum", "Maximum time cannot be less than maximum time.");
@@ -243,14 +243,14 @@ public class SettingsActivity extends PreferenceActivity
 					return false;
 				}
 			}
-			
+
 			updateSummary(preference.getKey());
 		}
 		else if (preference instanceof RingtonePreference)
 		{
 			updateRingtoneSummary((RingtonePreference)preference, (String)newValue);
 		}
-		
+
 		return true;
 	}
 
@@ -267,36 +267,36 @@ public class SettingsActivity extends PreferenceActivity
 			finish();
 		}
 	}
-	
+
 	private String secondsToHMS(int totalSeconds)
 	{
 		String output = "";
 		int hours = totalSeconds / 3600;
 		int minutes = (totalSeconds % 3600) / 60;
 		int seconds = totalSeconds %60;
-		
+
 		if (hours > 0)
 			output += String.valueOf(hours) + (hours > 1 ? " hours" : " hour");
-		
+
 		if (minutes > 0)
 		{
 			if (output.length() > 0)
 				output += ", ";
-			
+
 			output += String.valueOf(minutes) + (minutes > 1 ? " minutes" : " minute");
 		}
-		
+
 		if (seconds > 0 || output.length() == 0)
 		{
 			if (output.length() > 0)
 				output += ", ";
-			
+
 			output += String.valueOf(seconds) + (seconds > 1 || seconds == 0 ? " seconds" : " second");
 		}
-		
+
 		return output;
 	}
-	
+
 	private void showInvalidAlert(String title, String message)
 	{
 		new AlertDialog.Builder(this)
