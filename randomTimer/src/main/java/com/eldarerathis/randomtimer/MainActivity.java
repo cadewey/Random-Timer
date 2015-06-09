@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity
 	 * In these cases, pressing the menu button causes an NPE. The next two
 	 * overrides attempt to workaround this issue.
 	 * 
-	 * AOSP buck report: https://code.google.com/p/android/issues/detail?id=78154
+	 * AOSP bug report: https://code.google.com/p/android/issues/detail?id=78154
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) 
