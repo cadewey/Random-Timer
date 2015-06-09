@@ -15,16 +15,14 @@ The most recent version of Random Timer is available [on Google Play](https://pl
 
 ## Building the source
 
-For now, Random Timer is still using Eclipse/ADT for its build system. It requires these libraries:
+You'll need [Android Studio](https://developer.android.com/sdk/index.html) to build Random Timer. 
+It has the following dependencies, which `gradle` will attempt to pull in for you automagically:
 
  - android-support-v7-appcompat
- - android-support-v4
  - [Android Bootstrap](https://github.com/Bearded-Hen/Android-Bootstrap)
- 
-You should be able to either use pre-built .jar files or the sources for the project libraries, but
-the build has only been tested with the library sources included as projects in the build.
 
-Migration to Android Studio is still a to-do item.
+You shouldn't need to do anything special; just clone the repo, open the project in Android Studio
+and build.
 
 ## License
 
